@@ -12,3 +12,7 @@ export interface IContact {
     email: string;
     photo: string;
 }
+
+export interface ContactList {
+    [id: string]: IContact
+}
