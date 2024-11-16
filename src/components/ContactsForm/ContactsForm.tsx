@@ -4,6 +4,10 @@ import {Button, TextField, Typography} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import * as React from "react";
 
+interface IProps {
+    addNewContact: (contact: IContactsForm) => void;
+}
+
 const initialState = {
     name: '',
     phone: '',
@@ -11,15 +15,20 @@ const initialState = {
     photo: '',
 }
 
-const ContactsForm = () => {
+const ContactsForm: React.FC<IProps> = ({addNewContact}) => {
     const [form, setForm] = useState<IContactsForm>(initialState);
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({...form, [e.target.name]: e.target.value});
     }
 
+
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (form.name.trim().length > 0 ) {
+            addNewContact(form);
+        }
+        setForm(initialState);
     }
     return (
         <form onSubmit={onSubmit}>
