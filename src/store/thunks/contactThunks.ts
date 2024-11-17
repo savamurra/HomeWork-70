@@ -22,3 +22,13 @@ export const getContacts = createAsyncThunk<IContact[], void>('contact/getContac
         };
     });
 });
+
+export const editContact = createAsyncThunk<void, IContact>('contact/editContact', async (contact) => {
+    const {id, ...data} = contact;
+    await axiosApi.put(`contact/${id}.json`, data);
+});
+
+export const deleteContact = createAsyncThunk<void, string>('contact/deleteContact', async (id: string) => {
+    await axiosApi.delete(`contact/${id}.json`);
+})
+

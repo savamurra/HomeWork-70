@@ -15,7 +15,7 @@ const Navbar = () => {
                         >
                             <h3>Contacts</h3>
                         </Typography>
-                        <Button color='inherit' to='newContact' component={NavLink}>
+                        <Button color='inherit' to='contactForm' component={NavLink}>
                             Add New Contact
                         </Button>
                     </Toolbar>

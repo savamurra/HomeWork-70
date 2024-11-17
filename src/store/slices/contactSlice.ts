@@ -1,15 +1,19 @@
 import { createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IContact} from "../../types";
-import {createContact, getContacts} from "../thunks/contactThunks.ts";
+import {createContact, deleteContact, editContact, getContacts} from "../thunks/contactThunks.ts";
 import {RootState} from "../../app/store.ts";
 
 interface ContactState {
     contacts: IContact[];
     isLoading: boolean;
+    selectedContact: IContact | null;
+    isOpenModal: boolean;
 }
 
 const initialState: ContactState = {
     contacts: [],
+    isOpenModal: false,
+    selectedContact: null,
     isLoading: false,
 }
 
@@ -18,7 +22,18 @@ export const getAllContacts = (state: RootState) => state.contact.contacts
 export const contactSlice = createSlice({
     name: 'contact',
     initialState,
-    reducers: {},
+    reducers: {
+        openModal: (state, action: PayloadAction<IContact>) => {
+            state.selectedContact = action.payload;
+            state.isOpenModal = true;
+        },
+        closeModal: (state) => {
+            state.isOpenModal = false;
+        },
+        resetSelectedContact: (state) => {
+            state.selectedContact = null;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(createContact.pending, (state) => {
@@ -40,5 +55,26 @@ export const contactSlice = createSlice({
             .addCase(getContacts.rejected, state => {
                 state.isLoading = false;
             })
+            .addCase(editContact.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(editContact.fulfilled, (state) => {
+                state.isLoading = false;
+                state.selectedContact = null
+            })
+            .addCase(editContact.rejected, state => {
+                state.isLoading = false;
+            })
+            .addCase(deleteContact.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(deleteContact.fulfilled, (state) => {
+                state.isLoading = false;
+            })
+            .addCase(deleteContact.rejected, state => {
+                state.isLoading = false;
+            })
     }
 })
+
+export const {openModal, closeModal, resetSelectedContact} = contactSlice.actions;

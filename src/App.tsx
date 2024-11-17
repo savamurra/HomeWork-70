@@ -14,7 +14,7 @@ function App() {
             <Container>
                 <Routes>
                     <Route path="/" element={<Contacts/>}/>
-                    <Route path="newContact" element={<NewContacts/>}/>
+                    <Route path="contactForm" element={<NewContacts/>}/>
                 </Routes>
             </Container>
         </>

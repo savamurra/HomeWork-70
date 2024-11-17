@@ -9,12 +9,20 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {NavLink} from "react-router-dom";
+import {deleteContact, getContacts} from "../../../store/thunks/contactThunks.ts";
+import {useCallback} from "react";
 
 
 const Modal = () => {
     const dispatch = useAppDispatch();
     const isOpenModal = useAppSelector((state: RootState) => state.contact.isOpenModal);
     const selectedContact = useAppSelector((state: RootState) => state.contact.selectedContact);
+
+    const onDelete = useCallback(async (id: string) => {
+        await dispatch(deleteContact(id))
+        dispatch(closeModal())
+        await dispatch(getContacts())
+    },[dispatch])
 
 
     if (!isOpenModal) return null;
@@ -39,7 +47,7 @@ const Modal = () => {
             }}>
                 <IconButton
                     style={{
-                        marginLeft: 380,
+                        marginLeft: 480,
                         padding: 0,
                     }}
                     onClick={() => dispatch(closeModal())}
@@ -71,7 +79,9 @@ const Modal = () => {
                                 {selectedContact.phone}
                             </p>
                         </div>
-                        <Button style={{ width: 120}}>
+                        <Button style={{ width: 120}}
+                            onClick={() => onDelete(selectedContact.id)}
+                        >
                             <DeleteIcon/>
                             Delete
                         </Button>
