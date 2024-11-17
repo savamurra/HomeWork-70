@@ -1,5 +1,5 @@
 import {useAppDispatch, useAppSelector} from "../../../app/hooks.ts";
-import {closeModal} from "../../../store/slices/contactSlice.ts";
+import {closeModal, transition} from "../../../store/slices/contactSlice.ts";
 import {Button, IconButton} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import {RootState} from "../../../app/store.ts";
@@ -88,7 +88,7 @@ const Modal = () => {
                         <Button to='/contactForm'
                                 component={NavLink}
                                 style={{ width: 120}}
-                                onClick={() => dispatch(closeModal())}
+                                onClick={() => dispatch(transition())}
                         >
                             <EditIcon style={{marginRight: 8}}/>
                             Edit

@@ -6,18 +6,22 @@ import {RootState} from "../../app/store.ts";
 interface ContactState {
     contacts: IContact[];
     isLoading: boolean;
+    isDeleteLoading: boolean;
     selectedContact: IContact | null;
     isOpenModal: boolean;
 }
 
 const initialState: ContactState = {
     contacts: [],
-    isOpenModal: false,
-    selectedContact: null,
     isLoading: false,
+    isDeleteLoading: false,
+    selectedContact: null,
+    isOpenModal: false,
 }
 
-export const getAllContacts = (state: RootState) => state.contact.contacts
+export const getAllContacts = (state: RootState) => state.contact.contacts;
+export const deleteLoading = (state: RootState) => state.contact.isDeleteLoading;
+export const isLoading = (state: RootState) => state.contact.isLoading;
 
 export const contactSlice = createSlice({
     name: 'contact',
@@ -28,6 +32,11 @@ export const contactSlice = createSlice({
             state.isOpenModal = true;
         },
         closeModal: (state) => {
+            state.isOpenModal = false;
+            state.selectedContact = null;
+        }
+        ,
+        transition: (state) => {
             state.isOpenModal = false;
         },
         resetSelectedContact: (state) => {
@@ -66,15 +75,15 @@ export const contactSlice = createSlice({
                 state.isLoading = false;
             })
             .addCase(deleteContact.pending, (state) => {
-                state.isLoading = true;
+                state.isDeleteLoading = true;
             })
             .addCase(deleteContact.fulfilled, (state) => {
-                state.isLoading = false;
+                state.isDeleteLoading = false;
             })
             .addCase(deleteContact.rejected, state => {
-                state.isLoading = false;
+                state.isDeleteLoading = false;
             })
     }
 })
 
-export const {openModal, closeModal, resetSelectedContact} = contactSlice.actions;
+export const {openModal,transition, closeModal, resetSelectedContact} = contactSlice.actions;
