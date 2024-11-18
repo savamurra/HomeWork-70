@@ -1,18 +1,18 @@
 export interface IContactsForm {
-    name: string;
-    phone: string;
-    email: string;
-    photo: string;
+  name: string;
+  phone: string;
+  email: string;
+  photo: string;
 }
 
 export interface IContact {
-    id: string;
-    name: string;
-    phone: string;
-    email: string;
-    photo: string;
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  photo: string;
 }
 
 export interface ContactList {
-    [id: string]: IContact
+  [id: string]: IContact;
 }
