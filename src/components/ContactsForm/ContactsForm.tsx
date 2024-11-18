@@ -7,7 +7,7 @@ import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
 import {RootState} from "../../app/store.ts";
 import {createContact, editContact} from "../../store/thunks/contactThunks.ts";
 import {isLoading, resetSelectedContact} from "../../store/slices/contactSlice.ts";
-import {useNavigate} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import Spinner from "../UI/Spinner/Spinner.tsx";
 
 
@@ -132,6 +132,9 @@ const ContactsForm = () => {
                             {selectedContact ? 'Edit' : 'Create'}
                             </span>
                         </Button>
+                    </Grid>
+                    <Grid size={8}>
+                        <Button color="info" variant="contained" sx={{width: "100%"}} to='/' component={NavLink}>Back to Contact</Button>
                     </Grid>
                 </Grid>
             </form>
